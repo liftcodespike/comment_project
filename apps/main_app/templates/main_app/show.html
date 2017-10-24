@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p>name: {{shown_user.first_name}} {{shown_user.last_name}}</p>
+
+
+
+
+
+	{%for comment in shown_user.comments.all%}
+		<p>{{comment.poster.first_name}} said: {{comment.content}}</p>
+	{%endfor%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{% if messages %}
+	    {% for message in messages %}
+	        {{ message }}
+	    {% endfor %}
+	{% endif %}
+
+	<form action="/main/comment/add" method="post">
+		{% csrf_token %}
+		<input type="text" name="content" placeholder="Enter your content here!">
+		<input type="hidden" name="poster_id" value="{{request.session.user_id}}">
+		<input type="hidden" name="user_id" value="{{shown_user.id}}">
+		<input type="submit" value='Add a comment'>
+
+	</form>
+
+</body>
+</html>
